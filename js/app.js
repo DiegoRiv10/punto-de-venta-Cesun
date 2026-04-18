@@ -16,14 +16,27 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Mostrar usuario logueado
-    document.getElementById('usuario-actual').textContent = `${sesionActual.rol === 'admin' ? 'Admin' : 'Cajero'}: ${sesionActual.nombre}`;
+    const roles = { admin: 'Admin', cajero: 'Cajero', almacen: 'Almacen' };
+    document.getElementById('usuario-actual').textContent = `${roles[sesionActual.rol] || sesionActual.rol}: ${sesionActual.nombre}`;
+
+    // Inicializar modales PRIMERO (otros modulos los necesitan)
+    initModal();
 
     // Restringir tabs segun rol
     if (sesionActual.rol === 'cajero') {
-        const tabProductos = document.querySelector('[data-tab="productos"]');
-        if (tabProductos) {
-            tabProductos.style.display = 'none';
-        }
+        // Cajero: solo ventas e historial
+        document.querySelector('[data-tab="productos"]').style.display = 'none';
+        document.querySelector('[data-tab="reportes"]').style.display = 'none';
+    } else if (sesionActual.rol === 'almacen') {
+        // Almacen: solo productos (inventario)
+        document.querySelector('[data-tab="ventas"]').style.display = 'none';
+        document.querySelector('[data-tab="historial"]').style.display = 'none';
+        document.querySelector('[data-tab="reportes"]').style.display = 'none';
+        // Activar tab productos por defecto
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+        document.querySelector('[data-tab="productos"]').classList.add('active');
+        document.getElementById('productos').classList.add('active');
     }
 
     // Logout
@@ -48,7 +61,6 @@ document.addEventListener('DOMContentLoaded', () => {
     initCarrito();
     initFormProducto();
     initHistorial();
-    initModal();
     renderCarrito();
 });
 

@@ -300,6 +300,7 @@
 
         .admin-avatar { background: linear-gradient(135deg, #2563eb, #1d4ed8); }
         .cajero-avatar { background: linear-gradient(135deg, #16a34a, #15803d); }
+        .almacen-avatar { background: linear-gradient(135deg, #f59e0b, #d97706); }
 
         @media (max-width: 480px) {
             .login-card { padding: 36px 24px; }
@@ -361,6 +362,13 @@
                             <small>Ventas e historial</small>
                         </div>
                     </button>
+                    <button type="button" class="demo-user-btn" onclick="loginRapido('almacen', 'almacen123')">
+                        <div class="demo-avatar almacen-avatar">AL</div>
+                        <div class="demo-info">
+                            <strong>Almacen</strong>
+                            <small>Registro de productos e inventario</small>
+                        </div>
+                    </button>
                 </div>
             </div>
         </div>
@@ -371,6 +379,7 @@
         const USUARIOS = [
             { usuario: 'admin', password: 'admin123', nombre: 'Administrador', rol: 'admin' },
             { usuario: 'cajero', password: 'cajero123', nombre: 'Cajero', rol: 'cajero' },
+            { usuario: 'almacen', password: 'almacen123', nombre: 'Almacen', rol: 'almacen' },
             { usuario: 'diego', password: 'diego123', nombre: 'Diego Rivera', rol: 'admin' },
         ];
 
