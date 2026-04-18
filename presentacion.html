@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Presentacion - Punto de Venta CESUN</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --primary: #2563eb;
+            --primary-light: #3b82f6;
+            --dark: #0f172a;
+            --gray: #64748b;
+            --light: #f8fafc;
+            --accent: #06b6d4;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--dark);
+            color: white;
+            overflow-x: hidden;
+        }
+
+        /* Slides */
+        .slide {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 60px 80px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .slide::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at 30% 50%, rgba(37,99,235,0.08) 0%, transparent 50%),
+                        radial-gradient(circle at 70% 80%, rgba(6,182,212,0.06) 0%, transparent 40%);
+            z-index: 0;
+        }
+
+        .slide > * { position: relative; z-index: 1; }
+
+        .slide-number {
+            position: absolute;
+            top: 30px;
+            right: 40px;
+            font-size: 0.85rem;
+            color: var(--gray);
+            font-weight: 500;
+            letter-spacing: 2px;
+        }
+
+        .divider {
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            border-radius: 2px;
+            margin: 24px 0;
+        }
+
+        /* Slide 1 - Portada */
+        .slide-portada {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            text-align: center;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 8px 20px;
+            background: rgba(37,99,235,0.15);
+            border: 1px solid rgba(37,99,235,0.3);
+            border-radius: 30px;
+            font-size: 0.85rem;
+            color: var(--primary-light);
+            font-weight: 500;
+            letter-spacing: 1px;
+            margin-bottom: 30px;
+        }
+
+        .titulo-proyecto {
+            font-size: 4rem;
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, #ffffff 0%, #94a3b8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .subtitulo-proyecto {
+            font-size: 1.5rem;
+            font-weight: 300;
+            color: var(--gray);
+            margin-bottom: 40px;
+        }
+
+        .info-universidad {
+            font-size: 1rem;
+            color: var(--gray);
+            line-height: 1.8;
+        }
+
+        .info-universidad strong {
+            color: #cbd5e1;
+        }
+
+        /* Slide 2 - Equipo */
+        .slide-equipo {
+            background: linear-gradient(135deg, #0f172a 0%, #1a1a2e 100%);
+        }
+
+        .section-label {
+            font-size: 0.85rem;
+            color: var(--accent);
+            font-weight: 600;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+        }
+
+        .section-title {
+            font-size: 2.8rem;
+            font-weight: 800;
+            margin-bottom: 8px;
+        }
+
+        .section-desc {
+            font-size: 1.1rem;
+            color: var(--gray);
+            max-width: 600px;
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .equipo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 24px;
+            width: 100%;
+            max-width: 900px;
+        }
+
+        .miembro-card {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 16px;
+            padding: 32px 24px;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .miembro-card:hover {
+            background: rgba(37,99,235,0.08);
+            border-color: rgba(37,99,235,0.3);
+            transform: translateY(-4px);
+        }
+
+        .miembro-avatar {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin: 0 auto 16px;
+        }
+
+        .miembro-nombre {
+            font-size: 1.05rem;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .miembro-rol {
+            font-size: 0.85rem;
+            color: var(--gray);
+        }
+
+        /* Slide 3 - Proposito */
+        .slide-proposito {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+        }
+
+        .contenido-dos-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            width: 100%;
+            max-width: 1000px;
+            margin-top: 20px;
+        }
+
+        .col-info h3 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: var(--accent);
+        }
+
+        .col-info p {
+            font-size: 1rem;
+            color: #cbd5e1;
+            line-height: 1.8;
+        }
+
+        /* Slide 4 - Objetivos */
+        .slide-objetivos {
+            background: linear-gradient(135deg, #0f172a 0%, #162032 100%);
+        }
+
+        .objetivos-lista {
+            width: 100%;
+            max-width: 800px;
+            margin-top: 10px;
+        }
+
+        .objetivo-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 20px;
+            padding: 20px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+        }
+
+        .objetivo-num {
+            flex-shrink: 0;
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
+        .objetivo-texto h4 {
+            font-size: 1.05rem;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .objetivo-texto p {
+            font-size: 0.9rem;
+            color: var(--gray);
+            line-height: 1.6;
+        }
+
+        /* Slide 5 - Justificacion */
+        .slide-justificacion {
+            background: linear-gradient(135deg, #0f172a 0%, #1a1a2e 100%);
+        }
+
+        .justificacion-box {
+            max-width: 800px;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 20px;
+            padding: 40px;
+            margin-top: 20px;
+        }
+
+        .justificacion-box p {
+            font-size: 1.05rem;
+            color: #cbd5e1;
+            line-height: 1.9;
+            margin-bottom: 16px;
+        }
+
+        .justificacion-box p:last-child { margin-bottom: 0; }
+
+        .highlight {
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        /* Slide 6 - Tecnologias */
+        .slide-tech {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+        }
+
+        .tech-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            width: 100%;
+            max-width: 900px;
+            margin-top: 10px;
+        }
+
+        .tech-card {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 16px;
+            padding: 28px;
+            transition: all 0.3s;
+        }
+
+        .tech-card:hover {
+            background: rgba(37,99,235,0.08);
+            border-color: rgba(37,99,235,0.2);
+        }
+
+        .tech-icon {
+            font-size: 2rem;
+            margin-bottom: 12px;
+        }
+
+        .tech-card h4 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .tech-card p {
+            font-size: 0.85rem;
+            color: var(--gray);
+            line-height: 1.6;
+        }
+
+        .tech-badge {
+            display: inline-block;
+            padding: 4px 10px;
+            background: rgba(37,99,235,0.15);
+            border-radius: 6px;
+            font-size: 0.75rem;
+            color: var(--primary-light);
+            font-weight: 500;
+            margin-top: 10px;
+        }
+
+        /* Slide 7 - Arquitectura */
+        .slide-arq {
+            background: linear-gradient(135deg, #0f172a 0%, #162032 100%);
+        }
+
+        .arq-diagrama {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+            margin-top: 20px;
+        }
+
+        .arq-capa {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .arq-bloque {
+            padding: 16px 28px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            text-align: center;
+            min-width: 160px;
+        }
+
+        .arq-vista { background: rgba(37,99,235,0.2); border: 1px solid rgba(37,99,235,0.4); }
+        .arq-control { background: rgba(6,182,212,0.2); border: 1px solid rgba(6,182,212,0.4); }
+        .arq-modelo { background: rgba(139,92,246,0.2); border: 1px solid rgba(139,92,246,0.4); }
+        .arq-datos { background: rgba(245,158,11,0.2); border: 1px solid rgba(245,158,11,0.4); }
+
+        .arq-flecha {
+            font-size: 1.5rem;
+            color: var(--gray);
+        }
+
+        .arq-label {
+            font-size: 0.8rem;
+            color: var(--gray);
+            margin-top: -8px;
+        }
+
+        /* Slide 8 - Demo */
+        .slide-demo {
+            background: linear-gradient(135deg, #0f172a 0%, #1a1a2e 100%);
+            text-align: center;
+        }
+
+        .btn-demo {
+            display: inline-block;
+            padding: 16px 40px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: white;
+            text-decoration: none;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-top: 30px;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-demo:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(37,99,235,0.3);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .slide { padding: 40px 24px; }
+            .titulo-proyecto { font-size: 2.5rem; }
+            .section-title { font-size: 2rem; }
+            .contenido-dos-col { grid-template-columns: 1fr; gap: 30px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Slide 1: Portada -->
+    <section class="slide slide-portada">
+        <span class="slide-number">01 / 08</span>
+        <div class="badge">CESUN UNIVERSIDAD - DESARROLLO EMPRESARIAL</div>
+        <h1 class="titulo-proyecto">Punto de Venta</h1>
+        <p class="subtitulo-proyecto">Sistema POS Web</p>
+        <div class="divider"></div>
+        <div class="info-universidad">
+            <strong>Materia:</strong> Desarrollo Empresarial<br>
+            <strong>Profesor(a):</strong> [Nombre del profesor]<br>
+            <strong>Fecha:</strong> Abril 2026
+        </div>
+    </section>
+
+    <!-- Slide 2: Equipo -->
+    <section class="slide slide-equipo">
+        <span class="slide-number">02 / 08</span>
+        <p class="section-label">Nuestro Equipo</p>
+        <h2 class="section-title">Integrantes</h2>
+        <div class="divider"></div>
+        <p class="section-desc">Equipo de desarrollo responsable del diseno, implementacion y documentacion del sistema.</p>
+        <div class="equipo-grid">
+            <div class="miembro-card">
+                <div class="miembro-avatar">DR</div>
+                <div class="miembro-nombre">Diego Rivera</div>
+                <div class="miembro-rol">Desarrollador Full Stack</div>
+            </div>
+            <div class="miembro-card">
+                <div class="miembro-avatar">I2</div>
+                <div class="miembro-nombre">[Integrante 2]</div>
+                <div class="miembro-rol">[Rol]</div>
+            </div>
+            <div class="miembro-card">
+                <div class="miembro-avatar">I3</div>
+                <div class="miembro-nombre">[Integrante 3]</div>
+                <div class="miembro-rol">[Rol]</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide 3: Proposito -->
+    <section class="slide slide-proposito">
+        <span class="slide-number">03 / 08</span>
+        <p class="section-label">Contexto</p>
+        <h2 class="section-title">Proposito del Proyecto</h2>
+        <div class="divider"></div>
+        <div class="contenido-dos-col">
+            <div class="col-info">
+                <h3>El Problema</h3>
+                <p>Muchos pequenos y medianos negocios en Mexico aun gestionan sus ventas de forma manual o con sistemas obsoletos, lo que genera errores en el registro de transacciones, perdida de control sobre el inventario y dificultad para tomar decisiones basadas en datos reales.</p>
+            </div>
+            <div class="col-info">
+                <h3>La Solucion</h3>
+                <p>Un sistema de Punto de Venta web, accesible desde cualquier navegador, que digitaliza el proceso de venta completo: desde la seleccion de productos hasta la generacion del ticket, incluyendo control de inventario y reportes en tiempo real.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide 4: Objetivos -->
+    <section class="slide slide-objetivos">
+        <span class="slide-number">04 / 08</span>
+        <p class="section-label">Metas</p>
+        <h2 class="section-title">Objetivos</h2>
+        <div class="divider"></div>
+        <div class="objetivos-lista">
+            <div class="objetivo-item">
+                <div class="objetivo-num">1</div>
+                <div class="objetivo-texto">
+                    <h4>Automatizar el proceso de ventas</h4>
+                    <p>Reducir errores humanos en el calculo de totales, IVA y cambio mediante un sistema automatizado.</p>
+                </div>
+            </div>
+            <div class="objetivo-item">
+                <div class="objetivo-num">2</div>
+                <div class="objetivo-texto">
+                    <h4>Gestionar inventario en tiempo real</h4>
+                    <p>Actualizar el stock automaticamente con cada venta y alertar cuando los productos esten por agotarse.</p>
+                </div>
+            </div>
+            <div class="objetivo-item">
+                <div class="objetivo-num">3</div>
+                <div class="objetivo-texto">
+                    <h4>Generar reportes para la toma de decisiones</h4>
+                    <p>Proveer metricas clave como ventas del dia, producto mas vendido y distribucion por metodo de pago.</p>
+                </div>
+            </div>
+            <div class="objetivo-item">
+                <div class="objetivo-num">4</div>
+                <div class="objetivo-texto">
+                    <h4>Ofrecer accesibilidad sin infraestructura</h4>
+                    <p>Funcionar directamente en el navegador sin necesidad de servidores, bases de datos externas ni instalacion.</p>
+                </div>
+            </div>
+            <div class="objetivo-item">
+                <div class="objetivo-num">5</div>
+                <div class="objetivo-texto">
+                    <h4>Aplicar metodologias de desarrollo empresarial</h4>
+                    <p>Documentar el proyecto con analisis de requerimientos, diagramas y pruebas, simulando un entorno profesional.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide 5: Justificacion -->
+    <section class="slide slide-justificacion">
+        <span class="slide-number">05 / 08</span>
+        <p class="section-label">Fundamento</p>
+        <h2 class="section-title">Justificacion</h2>
+        <div class="divider"></div>
+        <div class="justificacion-box">
+            <p>Segun datos del INEGI, <span class="highlight">mas del 90% de las empresas en Mexico son micro y pequenas empresas</span>, muchas de las cuales no cuentan con herramientas digitales para gestionar sus operaciones de venta. Esta carencia resulta en perdida de ingresos por errores de calculo, descontrol de inventario y falta de informacion para la toma de decisiones.</p>
+            <p>El desarrollo de un sistema POS web representa una <span class="highlight">solucion de bajo costo y alta accesibilidad</span>, ya que no requiere hardware especializado ni licencias de software. Al funcionar desde cualquier navegador, elimina las barreras de entrada tecnologicas que enfrentan estos negocios.</p>
+            <p>Desde la perspectiva academica, este proyecto permite aplicar conceptos de <span class="highlight">ingenieria de software, desarrollo web, diseno de interfaces y analisis de sistemas</span> en un contexto real y tangible, fortaleciendo las competencias profesionales del equipo de desarrollo.</p>
+        </div>
+    </section>
+
+    <!-- Slide 6: Tecnologias -->
+    <section class="slide slide-tech">
+        <span class="slide-number">06 / 08</span>
+        <p class="section-label">Stack Tecnologico</p>
+        <h2 class="section-title">Tecnologias Utilizadas</h2>
+        <div class="divider"></div>
+        <div class="tech-grid">
+            <div class="tech-card">
+                <div class="tech-icon">&lt;/&gt;</div>
+                <h4>HTML5</h4>
+                <p>Estructura semantica de la aplicacion con elementos modernos del estandar.</p>
+                <span class="tech-badge">Markup</span>
+            </div>
+            <div class="tech-card">
+                <div class="tech-icon">#{ }</div>
+                <h4>CSS3</h4>
+                <p>Diseno responsivo con Grid Layout, Flexbox y Variables CSS personalizadas.</p>
+                <span class="tech-badge">Estilos</span>
+            </div>
+            <div class="tech-card">
+                <div class="tech-icon">JS</div>
+                <h4>JavaScript ES6+</h4>
+                <p>Logica de negocio con arrow functions, template literals, destructuring y modulos.</p>
+                <span class="tech-badge">Logica</span>
+            </div>
+            <div class="tech-card">
+                <div class="tech-icon">DB</div>
+                <h4>localStorage</h4>
+                <p>API Web Storage del navegador para persistencia de datos local sin servidor.</p>
+                <span class="tech-badge">Persistencia</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide 7: Arquitectura -->
+    <section class="slide slide-arq">
+        <span class="slide-number">07 / 08</span>
+        <p class="section-label">Diseno</p>
+        <h2 class="section-title">Arquitectura MVC</h2>
+        <div class="divider"></div>
+        <p class="section-desc">El sistema implementa el patron Modelo-Vista-Controlador simplificado para separar responsabilidades.</p>
+        <div class="arq-diagrama">
+            <div class="arq-capa">
+                <div class="arq-bloque arq-vista">index.html<br><small>Vista / UI</small></div>
+                <div class="arq-bloque arq-vista">styles.css<br><small>Presentacion</small></div>
+            </div>
+            <div class="arq-flecha">&#8595;</div>
+            <div class="arq-label">Eventos del usuario</div>
+            <div class="arq-capa">
+                <div class="arq-bloque arq-control">app.js<br><small>Controlador / Logica</small></div>
+            </div>
+            <div class="arq-flecha">&#8595;</div>
+            <div class="arq-label">Lectura / Escritura</div>
+            <div class="arq-capa">
+                <div class="arq-bloque arq-modelo">datos.js<br><small>Modelo / Datos</small></div>
+            </div>
+            <div class="arq-flecha">&#8595;</div>
+            <div class="arq-label">Persistencia</div>
+            <div class="arq-capa">
+                <div class="arq-bloque arq-datos">localStorage<br><small>Almacenamiento</small></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide 8: Demo -->
+    <section class="slide slide-demo">
+        <span class="slide-number">08 / 08</span>
+        <p class="section-label">Demostracion</p>
+        <h2 class="section-title">Demo en Vivo</h2>
+        <div class="divider"></div>
+        <p class="section-desc">A continuacion se presenta el sistema funcionando en tiempo real.</p>
+        <a href="index.html" class="btn-demo">Abrir Punto de Venta</a>
+    </section>
+
+</body>
+</html>

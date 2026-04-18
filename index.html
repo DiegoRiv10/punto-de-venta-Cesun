@@ -5,9 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Punto de Venta - CESUN</title>
     <link rel="stylesheet" href="css/styles.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛒</text></svg>">
 </head>
 <body>
     <div id="app">
+        <!-- Toast container -->
+        <div id="toast-container" class="toast-container"></div>
+
         <!-- Header -->
         <header class="header">
             <h1>Punto de Venta CESUN</h1>
@@ -69,7 +73,7 @@
                                 <option value="transferencia">Transferencia</option>
                             </select>
                         </div>
-                        <div id="pago-efectivo" class="pago-efectivo">
+                        <div id="pago-efectivo" class="pago-efectivo visible">
                             <label>Pago con:</label>
                             <input type="number" id="monto-pago" placeholder="0.00" min="0" step="0.01">
                             <div class="cambio-linea">
@@ -95,21 +99,21 @@
                     <div class="form-row">
                         <div class="form-group">
                             <label>Codigo:</label>
-                            <input type="text" id="prod-codigo" required>
+                            <input type="text" id="prod-codigo" required placeholder="Ej: BEB005">
                         </div>
                         <div class="form-group">
                             <label>Nombre:</label>
-                            <input type="text" id="prod-nombre" required>
+                            <input type="text" id="prod-nombre" required placeholder="Nombre del producto">
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group">
                             <label>Precio:</label>
-                            <input type="number" id="prod-precio" min="0" step="0.01" required>
+                            <input type="number" id="prod-precio" min="0.01" step="0.01" required placeholder="0.00">
                         </div>
                         <div class="form-group">
                             <label>Stock:</label>
-                            <input type="number" id="prod-stock" min="0" required>
+                            <input type="number" id="prod-stock" min="0" required placeholder="0">
                         </div>
                     </div>
                     <div class="form-row">
@@ -152,7 +156,7 @@
                 <div class="filtros-historial">
                     <input type="date" id="filtro-fecha">
                     <button id="btn-filtrar" class="btn-filtrar">Filtrar</button>
-                    <button id="btn-ver-todas" class="btn-filtrar">Ver Todas</button>
+                    <button id="btn-ver-todas" class="btn-filtrar secondary">Ver Todas</button>
                 </div>
                 <table class="tabla-historial">
                     <thead>
@@ -191,7 +195,7 @@
                         <p class="reporte-sub">en inventario</p>
                     </div>
                     <div class="reporte-card">
-                        <h3>Productos con Stock Bajo</h3>
+                        <h3>Productos Stock Bajo</h3>
                         <p class="reporte-valor" id="stock-bajo">0</p>
                         <p class="reporte-sub">menos de 5 unidades</p>
                     </div>
@@ -203,13 +207,47 @@
             </div>
         </section>
 
+        <!-- Modal Generico de Confirmacion -->
+        <div id="modal-confirm" class="modal-overlay">
+            <div class="modal-box">
+                <div class="modal-header">
+                    <div id="modal-confirm-icon" class="modal-icon success"></div>
+                    <h3 id="modal-confirm-title"></h3>
+                    <p id="modal-confirm-msg"></p>
+                </div>
+                <div class="modal-footer">
+                    <button id="modal-btn-no" class="modal-btn modal-btn-cancel">Cancelar</button>
+                    <button id="modal-btn-si" class="modal-btn modal-btn-confirm success">Confirmar</button>
+                </div>
+            </div>
+        </div>
+
         <!-- Modal Ticket -->
-        <div id="modal-ticket" class="modal">
-            <div class="modal-content ticket-modal">
+        <div id="modal-ticket" class="modal-overlay">
+            <div class="modal-box ticket-modal-box">
+                <div class="modal-header">
+                    <div class="modal-icon success">&#10003;</div>
+                    <h3>Venta procesada</h3>
+                    <p>El ticket se ha generado correctamente</p>
+                </div>
                 <div id="ticket-impresion" class="ticket-impresion"></div>
-                <div class="modal-buttons">
-                    <button id="btn-imprimir" class="btn-cobrar">Imprimir</button>
-                    <button id="btn-cerrar-ticket" class="btn-cancelar">Cerrar</button>
+                <div class="modal-footer">
+                    <button id="btn-cerrar-ticket" class="modal-btn modal-btn-cancel">Cerrar</button>
+                    <button id="btn-imprimir" class="modal-btn modal-btn-confirm primary">Imprimir</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal Alerta -->
+        <div id="modal-alert" class="modal-overlay">
+            <div class="modal-box">
+                <div class="modal-header">
+                    <div id="modal-alert-icon" class="modal-icon warning"></div>
+                    <h3 id="modal-alert-title"></h3>
+                    <p id="modal-alert-msg"></p>
+                </div>
+                <div class="modal-footer">
+                    <button id="modal-alert-ok" class="modal-btn modal-btn-confirm primary" style="flex:1;">Entendido</button>
                 </div>
             </div>
         </div>
