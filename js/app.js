@@ -4,9 +4,42 @@
 
 let carrito = [];
 let categoriaActual = 'todos';
+let sesionActual = null;
 
 // --- Inicializacion ---
 document.addEventListener('DOMContentLoaded', () => {
+    // Verificar sesion
+    sesionActual = JSON.parse(localStorage.getItem('pos_sesion') || 'null');
+    if (!sesionActual || !sesionActual.activa) {
+        window.location.href = 'login.html';
+        return;
+    }
+
+    // Mostrar usuario logueado
+    document.getElementById('usuario-actual').textContent = `${sesionActual.rol === 'admin' ? 'Admin' : 'Cajero'}: ${sesionActual.nombre}`;
+
+    // Restringir tabs segun rol
+    if (sesionActual.rol === 'cajero') {
+        const tabProductos = document.querySelector('[data-tab="productos"]');
+        if (tabProductos) {
+            tabProductos.style.display = 'none';
+        }
+    }
+
+    // Logout
+    document.getElementById('btn-logout').addEventListener('click', () => {
+        showConfirm(
+            'Cerrar Sesion',
+            'Deseas cerrar tu sesion actual?',
+            'warning',
+            'Cerrar Sesion',
+            () => {
+                localStorage.removeItem('pos_sesion');
+                window.location.href = 'login.html';
+            }
+        );
+    });
+
     initTabs();
     initReloj();
     renderProductosGrid();
