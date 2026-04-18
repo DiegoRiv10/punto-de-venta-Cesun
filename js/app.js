@@ -1,10 +1,69 @@
 // ==========================================
-// PUNTO DE VENTA CESUN - App Principal v2.0
+// PUNTO DE VENTA CESUN - App Principal v3.0
 // ==========================================
 
 let carrito = [];
 let categoriaActual = 'todos';
 let sesionActual = null;
+
+// --- Sonido al agregar producto ---
+function playSound(tipo) {
+    try {
+        const ctx = new (window.AudioContext || window.webkitAudioContext)();
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        gain.gain.value = 0.08;
+
+        if (tipo === 'add') {
+            osc.frequency.value = 800;
+            osc.type = 'sine';
+            osc.start();
+            osc.frequency.setValueAtTime(1200, ctx.currentTime + 0.06);
+            gain.gain.setValueAtTime(0.08, ctx.currentTime + 0.1);
+            gain.gain.linearRampToValueAtTime(0, ctx.currentTime + 0.15);
+            osc.stop(ctx.currentTime + 0.15);
+        } else if (tipo === 'remove') {
+            osc.frequency.value = 600;
+            osc.type = 'sine';
+            osc.start();
+            osc.frequency.setValueAtTime(400, ctx.currentTime + 0.08);
+            gain.gain.linearRampToValueAtTime(0, ctx.currentTime + 0.12);
+            osc.stop(ctx.currentTime + 0.12);
+        } else if (tipo === 'success') {
+            osc.frequency.value = 523;
+            osc.type = 'sine';
+            osc.start();
+            setTimeout(() => {
+                const osc2 = ctx.createOscillator();
+                const gain2 = ctx.createGain();
+                osc2.connect(gain2);
+                gain2.connect(ctx.destination);
+                gain2.gain.value = 0.08;
+                osc2.frequency.value = 659;
+                osc2.type = 'sine';
+                osc2.start();
+                setTimeout(() => {
+                    const osc3 = ctx.createOscillator();
+                    const gain3 = ctx.createGain();
+                    osc3.connect(gain3);
+                    gain3.connect(ctx.destination);
+                    gain3.gain.value = 0.08;
+                    osc3.frequency.value = 784;
+                    osc3.type = 'sine';
+                    osc3.start();
+                    gain3.gain.linearRampToValueAtTime(0, ctx.currentTime + 0.4);
+                    osc3.stop(ctx.currentTime + 0.4);
+                }, 120);
+                gain2.gain.linearRampToValueAtTime(0, ctx.currentTime + 0.3);
+                osc2.stop(ctx.currentTime + 0.3);
+            }, 120);
+            gain.gain.linearRampToValueAtTime(0, ctx.currentTime + 0.2);
+            osc.stop(ctx.currentTime + 0.2);
+        }
+    } catch(e) {}
+}
 
 // --- Inicializacion ---
 document.addEventListener('DOMContentLoaded', () => {
@@ -15,24 +74,27 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
     }
 
+    // Mostrar pantalla de bienvenida
+    mostrarBienvenida();
+
     // Mostrar usuario logueado
     const roles = { admin: 'Admin', cajero: 'Cajero', almacen: 'Almacen' };
     document.getElementById('usuario-actual').textContent = `${roles[sesionActual.rol] || sesionActual.rol}: ${sesionActual.nombre}`;
 
-    // Inicializar modales PRIMERO (otros modulos los necesitan)
+    // Inicializar modales PRIMERO
     initModal();
+
+    // Tema oscuro/claro
+    initTheme();
 
     // Restringir tabs segun rol
     if (sesionActual.rol === 'cajero') {
-        // Cajero: solo ventas e historial
         document.querySelector('[data-tab="productos"]').style.display = 'none';
         document.querySelector('[data-tab="reportes"]').style.display = 'none';
     } else if (sesionActual.rol === 'almacen') {
-        // Almacen: solo productos (inventario)
         document.querySelector('[data-tab="ventas"]').style.display = 'none';
         document.querySelector('[data-tab="historial"]').style.display = 'none';
         document.querySelector('[data-tab="reportes"]').style.display = 'none';
-        // Activar tab productos por defecto
         document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
         document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
         document.querySelector('[data-tab="productos"]').classList.add('active');
@@ -63,6 +125,41 @@ document.addEventListener('DOMContentLoaded', () => {
     initHistorial();
     renderCarrito();
 });
+
+// ==========================================
+// PANTALLA DE BIENVENIDA
+// ==========================================
+
+function mostrarBienvenida() {
+    const overlay = document.getElementById('pantalla-bienvenida');
+    const roles = { admin: 'Administrador', cajero: 'Cajero', almacen: 'Almacen' };
+    document.getElementById('bienvenida-nombre').textContent = sesionActual.nombre;
+    document.getElementById('bienvenida-rol').textContent = roles[sesionActual.rol] || sesionActual.rol;
+
+    setTimeout(() => {
+        overlay.classList.add('hide');
+        setTimeout(() => overlay.style.display = 'none', 500);
+    }, 2200);
+}
+
+// ==========================================
+// TEMA OSCURO / CLARO
+// ==========================================
+
+function initTheme() {
+    const saved = localStorage.getItem('pos_theme');
+    if (saved === 'dark') {
+        document.body.classList.add('dark');
+        document.getElementById('btn-theme').innerHTML = '&#9788;';
+    }
+
+    document.getElementById('btn-theme').addEventListener('click', () => {
+        document.body.classList.toggle('dark');
+        const isDark = document.body.classList.contains('dark');
+        document.getElementById('btn-theme').innerHTML = isDark ? '&#9788;' : '&#9790;';
+        localStorage.setItem('pos_theme', isDark ? 'dark' : 'light');
+    });
+}
 
 // ==========================================
 // SISTEMA DE NOTIFICACIONES (Toast + Modal)
@@ -362,11 +459,24 @@ function agregarAlCarrito(productoId) {
         });
     }
 
+    playSound('add');
     showToast(`${producto.nombre} agregado`, 'success', 1500);
     renderCarrito();
 }
 
+function actualizarBadge() {
+    const badge = document.getElementById('carrito-badge');
+    const total = carrito.reduce((sum, i) => sum + i.cantidad, 0);
+    if (total > 0) {
+        badge.textContent = total;
+        badge.style.display = 'inline-flex';
+    } else {
+        badge.style.display = 'none';
+    }
+}
+
 function renderCarrito() {
+    actualizarBadge();
     const lista = document.getElementById('lista-carrito');
 
     if (carrito.length === 0) {
@@ -431,6 +541,7 @@ function eliminarDelCarrito(id) {
         () => {
             carrito = carrito.filter(i => i.id !== id);
             renderCarrito();
+            playSound('remove');
             showToast('Producto eliminado del carrito', 'info', 1500);
         }
     );
@@ -490,16 +601,37 @@ function procesarVenta() {
     ventas.push(venta);
     DB.saveVentas(ventas);
 
-    // Mostrar ticket
-    mostrarTicket(venta);
+    // Sonido de exito
+    playSound('success');
+
+    // Pantalla de cobro exitoso
+    mostrarCobroExitoso(venta);
 
     // Limpiar
     carrito = [];
     renderCarrito();
     renderProductosGrid(document.getElementById('buscar-producto').value);
     document.getElementById('monto-pago').value = '';
+}
 
-    showToast(`Venta ${venta.folio} procesada correctamente`, 'success');
+function mostrarCobroExitoso(venta) {
+    const overlay = document.getElementById('cobro-exitoso');
+    document.getElementById('cobro-total').textContent = `$${venta.total.toFixed(2)}`;
+    document.getElementById('cobro-folio').textContent = `Folio: ${venta.folio}`;
+
+    if (venta.metodo === 'efectivo' && venta.cambio > 0) {
+        document.getElementById('cobro-cambio').textContent = `Cambio: $${venta.cambio.toFixed(2)}`;
+    } else {
+        document.getElementById('cobro-cambio').textContent = `Pago con ${venta.metodo}`;
+    }
+
+    overlay.classList.add('active');
+
+    setTimeout(() => {
+        overlay.classList.remove('active');
+        mostrarTicket(venta);
+        showToast(`Venta ${venta.folio} procesada correctamente`, 'success');
+    }, 2500);
 }
 
 // ==========================================

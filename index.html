@@ -12,19 +12,35 @@
         <!-- Toast container -->
         <div id="toast-container" class="toast-container"></div>
 
+        <!-- Pantalla de bienvenida -->
+        <div id="pantalla-bienvenida" class="bienvenida-overlay">
+            <div class="bienvenida-content">
+                <div class="bienvenida-icon">&#128075;</div>
+                <h1 class="bienvenida-titulo">Bienvenido</h1>
+                <p class="bienvenida-nombre" id="bienvenida-nombre"></p>
+                <p class="bienvenida-rol" id="bienvenida-rol"></p>
+                <div class="bienvenida-loader"><div class="loader-bar"></div></div>
+            </div>
+        </div>
+
         <!-- Header -->
         <header class="header">
             <h1>Punto de Venta CESUN</h1>
             <div class="header-info">
                 <span id="fecha-hora"></span>
                 <span id="usuario-actual">Cajero: Admin</span>
-                <button id="btn-logout" class="btn-logout" title="Cerrar sesion">Salir</button>
+                <div class="header-actions">
+                    <button id="btn-theme" class="btn-theme" title="Cambiar tema">&#9790;</button>
+                    <button id="btn-logout" class="btn-logout" title="Cerrar sesion">Salir</button>
+                </div>
             </div>
         </header>
 
         <!-- Navigation -->
         <nav class="nav-tabs">
-            <button class="tab-btn active" data-tab="ventas">Ventas</button>
+            <button class="tab-btn active" data-tab="ventas">
+                Ventas <span id="carrito-badge" class="carrito-badge" style="display:none;">0</span>
+            </button>
             <button class="tab-btn" data-tab="productos">Productos</button>
             <button class="tab-btn" data-tab="historial">Historial</button>
             <button class="tab-btn" data-tab="reportes">Reportes</button>
@@ -250,6 +266,16 @@
                 <div class="modal-footer">
                     <button id="modal-alert-ok" class="modal-btn modal-btn-confirm primary" style="flex:1;">Entendido</button>
                 </div>
+            </div>
+        </div>
+        <!-- Cobro exitoso -->
+        <div id="cobro-exitoso" class="cobro-exitoso-overlay">
+            <div class="cobro-exitoso-box">
+                <div class="cobro-check"><span>&#10003;</span></div>
+                <div class="cobro-titulo">Venta Exitosa</div>
+                <div class="cobro-total" id="cobro-total"></div>
+                <div class="cobro-cambio" id="cobro-cambio"></div>
+                <div class="cobro-folio" id="cobro-folio"></div>
             </div>
         </div>
     </div>

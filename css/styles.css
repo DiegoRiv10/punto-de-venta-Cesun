@@ -1090,6 +1090,314 @@ body {
     color: var(--text);
 }
 
+/* ==========================================
+   PANTALLA DE BIENVENIDA
+   ========================================== */
+.bienvenida-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
+    z-index: 5000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.5s ease, visibility 0.5s ease;
+}
+
+.bienvenida-overlay.hide {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.bienvenida-content {
+    text-align: center;
+    animation: bienvenidaIn 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes bienvenidaIn {
+    from { opacity: 0; transform: scale(0.8) translateY(20px); }
+    to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.bienvenida-icon {
+    font-size: 4rem;
+    margin-bottom: 20px;
+    animation: wave 1s ease-in-out 0.3s;
+}
+
+@keyframes wave {
+    0%, 100% { transform: rotate(0deg); }
+    25% { transform: rotate(20deg); }
+    50% { transform: rotate(-10deg); }
+    75% { transform: rotate(15deg); }
+}
+
+.bienvenida-titulo {
+    font-size: 3rem;
+    font-weight: 800;
+    color: white;
+    margin-bottom: 8px;
+    letter-spacing: -1px;
+}
+
+.bienvenida-nombre {
+    font-size: 1.5rem;
+    color: #3b82f6;
+    font-weight: 600;
+    margin-bottom: 6px;
+}
+
+.bienvenida-rol {
+    font-size: 1rem;
+    color: #64748b;
+    margin-bottom: 36px;
+}
+
+.bienvenida-loader {
+    width: 200px;
+    height: 4px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 2px;
+    margin: 0 auto;
+    overflow: hidden;
+}
+
+.loader-bar {
+    width: 0%;
+    height: 100%;
+    background: linear-gradient(90deg, #2563eb, #06b6d4);
+    border-radius: 2px;
+    animation: loaderFill 2s ease-in-out forwards;
+}
+
+@keyframes loaderFill {
+    0% { width: 0%; }
+    100% { width: 100%; }
+}
+
+/* ==========================================
+   BADGE CARRITO
+   ========================================== */
+.carrito-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 20px;
+    height: 20px;
+    padding: 0 6px;
+    background: #dc2626;
+    color: white;
+    border-radius: 10px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    margin-left: 6px;
+    animation: badgePop 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes badgePop {
+    from { transform: scale(0); }
+    to { transform: scale(1); }
+}
+
+/* ==========================================
+   HEADER ACTIONS
+   ========================================== */
+.header-actions {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.btn-theme {
+    width: 34px;
+    height: 34px;
+    padding: 0;
+    background: rgba(255,255,255,0.15);
+    color: white;
+    border: 1px solid rgba(255,255,255,0.25);
+    border-radius: 8px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-theme:hover {
+    background: rgba(255,255,255,0.25);
+}
+
+/* ==========================================
+   MODO OSCURO
+   ========================================== */
+body.dark {
+    --bg: #0f172a;
+    --card: #1e293b;
+    --text: #e2e8f0;
+    --text-light: #94a3b8;
+    --border: #334155;
+    --shadow: 0 1px 3px rgba(0,0,0,0.3);
+    --shadow-md: 0 4px 12px rgba(0,0,0,0.4);
+}
+
+body.dark .nav-tabs {
+    background: #1e293b;
+    border-bottom-color: #334155;
+}
+
+body.dark .busqueda input {
+    background: #1e293b;
+    color: #e2e8f0;
+    border-color: #334155;
+}
+
+body.dark .cat-btn {
+    background: #1e293b;
+    border-color: #334155;
+    color: #94a3b8;
+}
+
+body.dark .cat-btn.active {
+    background: var(--primary);
+    color: white;
+}
+
+body.dark .carrito-totales {
+    background: #1a2332;
+}
+
+body.dark .form-grupo input,
+body.dark .form-group input,
+body.dark .form-group select,
+body.dark .metodo-pago select,
+body.dark .pago-efectivo input,
+body.dark .filtros-historial input {
+    background: #0f172a;
+    color: #e2e8f0;
+    border-color: #334155;
+}
+
+body.dark .modal-box {
+    background: #1e293b;
+    color: #e2e8f0;
+}
+
+body.dark .modal-footer {
+    background: #172032;
+    border-color: #334155;
+}
+
+body.dark .modal-btn-cancel {
+    background: #0f172a;
+    border-color: #334155;
+    color: #94a3b8;
+}
+
+body.dark .ticket-impresion {
+    background: #0f172a;
+    color: #cbd5e1;
+    border-color: #334155;
+}
+
+body.dark .tabla-productos td,
+body.dark .tabla-historial td {
+    border-color: #334155;
+}
+
+body.dark .tabla-productos tr:hover,
+body.dark .tabla-historial tr:hover {
+    background: rgba(37,99,235,0.08);
+}
+
+body.dark .btn-editar { background: rgba(245,158,11,0.2); color: #fbbf24; }
+body.dark .btn-eliminar-prod { background: rgba(220,38,38,0.2); color: #f87171; }
+body.dark .btn-ver { background: rgba(37,99,235,0.2); color: #60a5fa; }
+body.dark .btn-limpiar { background: #334155; color: #94a3b8; border-color: #475569; }
+
+/* ==========================================
+   PANTALLA COBRO EXITOSO
+   ========================================== */
+.cobro-exitoso-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(15,23,42,0.85);
+    backdrop-filter: blur(8px);
+    z-index: 3000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+}
+
+.cobro-exitoso-overlay.active {
+    display: flex;
+}
+
+.cobro-exitoso-box {
+    text-align: center;
+    animation: cobroIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes cobroIn {
+    from { opacity: 0; transform: scale(0.7); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+.cobro-check {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #16a34a, #15803d);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 24px;
+    box-shadow: 0 0 60px rgba(22,163,74,0.4);
+    animation: checkPulse 1s ease-in-out infinite alternate;
+}
+
+@keyframes checkPulse {
+    from { box-shadow: 0 0 30px rgba(22,163,74,0.3); }
+    to { box-shadow: 0 0 60px rgba(22,163,74,0.5); }
+}
+
+.cobro-check span {
+    font-size: 3rem;
+    color: white;
+}
+
+.cobro-titulo {
+    font-size: 2.2rem;
+    font-weight: 800;
+    color: white;
+    margin-bottom: 10px;
+}
+
+.cobro-total {
+    font-size: 3rem;
+    font-weight: 800;
+    color: #4ade80;
+    margin-bottom: 8px;
+    letter-spacing: -1px;
+}
+
+.cobro-cambio {
+    font-size: 1.3rem;
+    color: #94a3b8;
+    margin-bottom: 8px;
+}
+
+.cobro-folio {
+    font-size: 1rem;
+    color: #64748b;
+}
+
 /* Responsive */
 @media (max-width: 768px) {
     .ventas-layout {
@@ -1117,5 +1425,13 @@ body {
 
     .tab-content {
         padding: 12px;
+    }
+
+    .bienvenida-titulo {
+        font-size: 2rem;
+    }
+
+    .cobro-total {
+        font-size: 2rem;
     }
 }
