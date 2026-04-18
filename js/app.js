@@ -74,9 +74,6 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
     }
 
-    // Mostrar pantalla de bienvenida
-    mostrarBienvenida();
-
     // Mostrar usuario logueado
     const roles = { admin: 'Admin', cajero: 'Cajero', almacen: 'Almacen' };
     document.getElementById('usuario-actual').textContent = `${roles[sesionActual.rol] || sesionActual.rol}: ${sesionActual.nombre}`;
@@ -102,18 +99,18 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Logout
-    document.getElementById('btn-logout').addEventListener('click', () => {
+    document.getElementById('btn-logout').onclick = function() {
         showConfirm(
             'Cerrar Sesion',
             'Deseas cerrar tu sesion actual?',
             'warning',
             'Cerrar Sesion',
-            () => {
+            function() {
                 localStorage.removeItem('pos_sesion');
                 window.location.href = 'login.html';
             }
         );
-    });
+    };
 
     initTabs();
     initReloj();
@@ -127,38 +124,23 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // ==========================================
-// PANTALLA DE BIENVENIDA
-// ==========================================
-
-function mostrarBienvenida() {
-    const overlay = document.getElementById('pantalla-bienvenida');
-    const roles = { admin: 'Administrador', cajero: 'Cajero', almacen: 'Almacen' };
-    document.getElementById('bienvenida-nombre').textContent = sesionActual.nombre;
-    document.getElementById('bienvenida-rol').textContent = roles[sesionActual.rol] || sesionActual.rol;
-
-    setTimeout(() => {
-        overlay.classList.add('hide');
-        setTimeout(() => overlay.style.display = 'none', 500);
-    }, 2200);
-}
-
-// ==========================================
 // TEMA OSCURO / CLARO
 // ==========================================
 
 function initTheme() {
     const saved = localStorage.getItem('pos_theme');
+    const btnTheme = document.getElementById('btn-theme');
     if (saved === 'dark') {
         document.body.classList.add('dark');
-        document.getElementById('btn-theme').innerHTML = '&#9788;';
+        btnTheme.innerHTML = '&#9788;';
     }
 
-    document.getElementById('btn-theme').addEventListener('click', () => {
+    btnTheme.onclick = function() {
         document.body.classList.toggle('dark');
         const isDark = document.body.classList.contains('dark');
-        document.getElementById('btn-theme').innerHTML = isDark ? '&#9788;' : '&#9790;';
+        btnTheme.innerHTML = isDark ? '&#9788;' : '&#9790;';
         localStorage.setItem('pos_theme', isDark ? 'dark' : 'light');
-    });
+    };
 }
 
 // ==========================================
