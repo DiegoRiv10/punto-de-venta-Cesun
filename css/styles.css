@@ -1,0 +1,675 @@
+/* Reset y variables */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --primary: #2563eb;
+    --primary-dark: #1d4ed8;
+    --success: #16a34a;
+    --danger: #dc2626;
+    --warning: #f59e0b;
+    --bg: #f1f5f9;
+    --card: #ffffff;
+    --text: #1e293b;
+    --text-light: #64748b;
+    --border: #e2e8f0;
+    --shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+}
+
+/* Header */
+.header {
+    background: var(--primary);
+    color: white;
+    padding: 12px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+
+.header h1 {
+    font-size: 1.4rem;
+    font-weight: 700;
+}
+
+.header-info {
+    display: flex;
+    gap: 20px;
+    font-size: 0.9rem;
+}
+
+/* Navigation */
+.nav-tabs {
+    background: white;
+    display: flex;
+    border-bottom: 2px solid var(--border);
+    padding: 0 16px;
+}
+
+.tab-btn {
+    padding: 12px 24px;
+    border: none;
+    background: none;
+    cursor: pointer;
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--text-light);
+    border-bottom: 3px solid transparent;
+    transition: all 0.2s;
+}
+
+.tab-btn:hover {
+    color: var(--primary);
+}
+
+.tab-btn.active {
+    color: var(--primary);
+    border-bottom-color: var(--primary);
+}
+
+/* Tabs */
+.tab-content {
+    display: none;
+    padding: 16px;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+/* Layout Ventas */
+.ventas-layout {
+    display: grid;
+    grid-template-columns: 1fr 380px;
+    gap: 16px;
+    height: calc(100vh - 130px);
+}
+
+.panel-productos {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.busqueda input {
+    width: 100%;
+    padding: 12px 16px;
+    border: 2px solid var(--border);
+    border-radius: 8px;
+    font-size: 1rem;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.busqueda input:focus {
+    border-color: var(--primary);
+}
+
+/* Categorias */
+.categorias-filtro {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.cat-btn {
+    padding: 6px 16px;
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    background: white;
+    cursor: pointer;
+    font-size: 0.85rem;
+    transition: all 0.2s;
+}
+
+.cat-btn:hover, .cat-btn.active {
+    background: var(--primary);
+    color: white;
+    border-color: var(--primary);
+}
+
+/* Grid productos */
+.grid-productos {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 12px;
+    overflow-y: auto;
+    padding: 4px;
+}
+
+.producto-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: var(--shadow);
+}
+
+.producto-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    border-color: var(--primary);
+}
+
+.producto-card .prod-nombre {
+    font-weight: 600;
+    font-size: 0.95rem;
+    margin-bottom: 4px;
+}
+
+.producto-card .prod-precio {
+    color: var(--success);
+    font-weight: 700;
+    font-size: 1.1rem;
+}
+
+.producto-card .prod-stock {
+    color: var(--text-light);
+    font-size: 0.8rem;
+    margin-top: 4px;
+}
+
+.producto-card.sin-stock {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* Carrito */
+.panel-carrito {
+    background: var(--card);
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.panel-carrito h2 {
+    padding: 16px;
+    background: var(--primary);
+    color: white;
+    font-size: 1.1rem;
+    text-align: center;
+}
+
+.lista-carrito {
+    flex: 1;
+    overflow-y: auto;
+    padding: 8px;
+}
+
+.carrito-item {
+    display: grid;
+    grid-template-columns: 1fr auto auto auto;
+    align-items: center;
+    gap: 8px;
+    padding: 8px;
+    border-bottom: 1px solid var(--border);
+    font-size: 0.9rem;
+}
+
+.carrito-item .item-nombre {
+    font-weight: 500;
+}
+
+.carrito-item .item-precio {
+    color: var(--text-light);
+}
+
+.carrito-item .item-cantidad {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.carrito-item .item-cantidad button {
+    width: 24px;
+    height: 24px;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    background: white;
+    cursor: pointer;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.carrito-item .item-cantidad button:hover {
+    background: var(--primary);
+    color: white;
+}
+
+.carrito-item .btn-eliminar {
+    background: none;
+    border: none;
+    color: var(--danger);
+    cursor: pointer;
+    font-size: 1.2rem;
+    padding: 2px 6px;
+}
+
+/* Totales */
+.carrito-totales {
+    padding: 16px;
+    border-top: 2px solid var(--border);
+}
+
+.total-linea {
+    display: flex;
+    justify-content: space-between;
+    padding: 4px 0;
+    font-size: 0.95rem;
+}
+
+.total-final {
+    font-weight: 700;
+    font-size: 1.3rem;
+    color: var(--primary);
+    border-top: 2px solid var(--border);
+    padding-top: 8px;
+    margin-top: 4px;
+}
+
+.metodo-pago {
+    margin-top: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.metodo-pago select {
+    flex: 1;
+    padding: 8px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    font-size: 0.9rem;
+}
+
+.pago-efectivo {
+    margin-top: 8px;
+}
+
+.pago-efectivo label {
+    font-size: 0.9rem;
+}
+
+.pago-efectivo input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    font-size: 1rem;
+    margin: 4px 0;
+}
+
+.cambio-linea {
+    display: flex;
+    justify-content: space-between;
+    font-weight: 600;
+    color: var(--success);
+}
+
+.botones-carrito {
+    display: flex;
+    gap: 8px;
+    margin-top: 12px;
+}
+
+.btn-cobrar {
+    flex: 1;
+    padding: 12px;
+    background: var(--success);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.btn-cobrar:hover:not(:disabled) {
+    background: #15803d;
+}
+
+.btn-cobrar:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.btn-cancelar {
+    padding: 12px 20px;
+    background: var(--danger);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.btn-cancelar:hover {
+    background: #b91c1c;
+}
+
+/* Administrar Productos */
+.productos-admin {
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.productos-admin h2 {
+    margin-bottom: 16px;
+    font-size: 1.3rem;
+}
+
+.form-producto {
+    background: var(--card);
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    margin-bottom: 20px;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+.form-group label {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 500;
+    margin-bottom: 4px;
+    color: var(--text-light);
+}
+
+.form-group input, .form-group select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    font-size: 0.95rem;
+}
+
+.form-buttons {
+    display: flex;
+    align-items: flex-end;
+    gap: 8px;
+}
+
+.btn-guardar {
+    padding: 10px 24px;
+    background: var(--success);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.btn-limpiar {
+    padding: 10px 24px;
+    background: var(--text-light);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+/* Tablas */
+.tabla-productos, .tabla-historial {
+    width: 100%;
+    background: var(--card);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    border-collapse: collapse;
+}
+
+.tabla-productos th, .tabla-historial th {
+    background: var(--primary);
+    color: white;
+    padding: 12px;
+    text-align: left;
+    font-size: 0.9rem;
+}
+
+.tabla-productos td, .tabla-historial td {
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--border);
+    font-size: 0.9rem;
+}
+
+.tabla-productos tr:hover, .tabla-historial tr:hover {
+    background: #f8fafc;
+}
+
+.btn-editar, .btn-eliminar-prod {
+    padding: 6px 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    margin-right: 4px;
+}
+
+.btn-editar {
+    background: var(--warning);
+    color: white;
+}
+
+.btn-eliminar-prod {
+    background: var(--danger);
+    color: white;
+}
+
+/* Historial */
+.historial-ventas h2 {
+    margin-bottom: 16px;
+}
+
+.filtros-historial {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 16px;
+}
+
+.filtros-historial input {
+    padding: 8px 12px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+}
+
+.btn-filtrar {
+    padding: 8px 16px;
+    background: var(--primary);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+/* Reportes */
+.reportes-panel h2 {
+    margin-bottom: 16px;
+}
+
+.reportes-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.reporte-card {
+    background: var(--card);
+    padding: 24px;
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    text-align: center;
+}
+
+.reporte-card h3 {
+    font-size: 0.9rem;
+    color: var(--text-light);
+    margin-bottom: 8px;
+}
+
+.reporte-valor {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--primary);
+}
+
+.reporte-sub {
+    font-size: 0.85rem;
+    color: var(--text-light);
+    margin-top: 4px;
+}
+
+.reporte-detalle {
+    background: var(--card);
+    padding: 24px;
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+}
+
+.reporte-detalle h3 {
+    margin-bottom: 16px;
+}
+
+.chart-barras {
+    display: flex;
+    gap: 24px;
+    align-items: flex-end;
+    height: 200px;
+    padding: 16px 0;
+}
+
+.chart-barra {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.chart-barra .barra {
+    width: 60px;
+    background: var(--primary);
+    border-radius: 6px 6px 0 0;
+    transition: height 0.5s;
+    min-height: 4px;
+}
+
+.chart-barra .barra-label {
+    font-size: 0.85rem;
+    color: var(--text-light);
+}
+
+.chart-barra .barra-valor {
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+/* Modal */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal.active {
+    display: flex;
+}
+
+.modal-content {
+    background: white;
+    border-radius: 12px;
+    padding: 24px;
+    max-width: 400px;
+    width: 90%;
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+.ticket-impresion {
+    font-family: 'Courier New', monospace;
+    font-size: 0.85rem;
+    line-height: 1.4;
+    padding: 16px;
+    border: 1px dashed #ccc;
+    margin-bottom: 16px;
+}
+
+.ticket-impresion .ticket-header {
+    text-align: center;
+    border-bottom: 1px dashed #999;
+    padding-bottom: 8px;
+    margin-bottom: 8px;
+}
+
+.ticket-impresion .ticket-items {
+    border-bottom: 1px dashed #999;
+    padding-bottom: 8px;
+    margin-bottom: 8px;
+}
+
+.ticket-impresion .ticket-total {
+    text-align: right;
+    font-weight: bold;
+}
+
+.modal-buttons {
+    display: flex;
+    gap: 8px;
+}
+
+.modal-buttons button {
+    flex: 1;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .ventas-layout {
+        grid-template-columns: 1fr;
+        height: auto;
+    }
+
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+
+    .header {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .grid-productos {
+        grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    }
+}

@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Punto de Venta - CESUN</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div id="app">
+        <!-- Header -->
+        <header class="header">
+            <h1>Punto de Venta CESUN</h1>
+            <div class="header-info">
+                <span id="fecha-hora"></span>
+                <span id="usuario-actual">Cajero: Admin</span>
+            </div>
+        </header>
+
+        <!-- Navigation -->
+        <nav class="nav-tabs">
+            <button class="tab-btn active" data-tab="ventas">Ventas</button>
+            <button class="tab-btn" data-tab="productos">Productos</button>
+            <button class="tab-btn" data-tab="historial">Historial</button>
+            <button class="tab-btn" data-tab="reportes">Reportes</button>
+        </nav>
+
+        <!-- Tab: Ventas -->
+        <section id="ventas" class="tab-content active">
+            <div class="ventas-layout">
+                <!-- Panel de busqueda y productos -->
+                <div class="panel-productos">
+                    <div class="busqueda">
+                        <input type="text" id="buscar-producto" placeholder="Buscar producto por nombre o codigo..." autofocus>
+                    </div>
+                    <div class="categorias-filtro">
+                        <button class="cat-btn active" data-cat="todos">Todos</button>
+                        <button class="cat-btn" data-cat="bebidas">Bebidas</button>
+                        <button class="cat-btn" data-cat="alimentos">Alimentos</button>
+                        <button class="cat-btn" data-cat="snacks">Snacks</button>
+                        <button class="cat-btn" data-cat="limpieza">Limpieza</button>
+                        <button class="cat-btn" data-cat="otros">Otros</button>
+                    </div>
+                    <div id="grid-productos" class="grid-productos"></div>
+                </div>
+
+                <!-- Panel del carrito -->
+                <div class="panel-carrito">
+                    <h2>Ticket de Venta</h2>
+                    <div id="lista-carrito" class="lista-carrito"></div>
+                    <div class="carrito-totales">
+                        <div class="total-linea">
+                            <span>Subtotal:</span>
+                            <span id="subtotal">$0.00</span>
+                        </div>
+                        <div class="total-linea">
+                            <span>IVA (16%):</span>
+                            <span id="iva">$0.00</span>
+                        </div>
+                        <div class="total-linea total-final">
+                            <span>TOTAL:</span>
+                            <span id="total">$0.00</span>
+                        </div>
+                        <div class="metodo-pago">
+                            <label>Metodo de pago:</label>
+                            <select id="metodo-pago">
+                                <option value="efectivo">Efectivo</option>
+                                <option value="tarjeta">Tarjeta</option>
+                                <option value="transferencia">Transferencia</option>
+                            </select>
+                        </div>
+                        <div id="pago-efectivo" class="pago-efectivo">
+                            <label>Pago con:</label>
+                            <input type="number" id="monto-pago" placeholder="0.00" min="0" step="0.01">
+                            <div class="cambio-linea">
+                                <span>Cambio:</span>
+                                <span id="cambio">$0.00</span>
+                            </div>
+                        </div>
+                        <div class="botones-carrito">
+                            <button id="btn-cobrar" class="btn-cobrar" disabled>Cobrar</button>
+                            <button id="btn-cancelar" class="btn-cancelar">Cancelar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tab: Productos -->
+        <section id="productos" class="tab-content">
+            <div class="productos-admin">
+                <h2>Administrar Productos</h2>
+                <form id="form-producto" class="form-producto">
+                    <input type="hidden" id="prod-id">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Codigo:</label>
+                            <input type="text" id="prod-codigo" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Nombre:</label>
+                            <input type="text" id="prod-nombre" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Precio:</label>
+                            <input type="number" id="prod-precio" min="0" step="0.01" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Stock:</label>
+                            <input type="number" id="prod-stock" min="0" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Categoria:</label>
+                            <select id="prod-categoria">
+                                <option value="bebidas">Bebidas</option>
+                                <option value="alimentos">Alimentos</option>
+                                <option value="snacks">Snacks</option>
+                                <option value="limpieza">Limpieza</option>
+                                <option value="otros">Otros</option>
+                            </select>
+                        </div>
+                        <div class="form-group form-buttons">
+                            <button type="submit" class="btn-guardar">Guardar</button>
+                            <button type="button" id="btn-limpiar" class="btn-limpiar">Limpiar</button>
+                        </div>
+                    </div>
+                </form>
+                <table class="tabla-productos">
+                    <thead>
+                        <tr>
+                            <th>Codigo</th>
+                            <th>Nombre</th>
+                            <th>Precio</th>
+                            <th>Stock</th>
+                            <th>Categoria</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbody-productos"></tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Tab: Historial -->
+        <section id="historial" class="tab-content">
+            <div class="historial-ventas">
+                <h2>Historial de Ventas</h2>
+                <div class="filtros-historial">
+                    <input type="date" id="filtro-fecha">
+                    <button id="btn-filtrar" class="btn-filtrar">Filtrar</button>
+                    <button id="btn-ver-todas" class="btn-filtrar">Ver Todas</button>
+                </div>
+                <table class="tabla-historial">
+                    <thead>
+                        <tr>
+                            <th>Folio</th>
+                            <th>Fecha</th>
+                            <th>Productos</th>
+                            <th>Total</th>
+                            <th>Metodo</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbody-historial"></tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Tab: Reportes -->
+        <section id="reportes" class="tab-content">
+            <div class="reportes-panel">
+                <h2>Reportes</h2>
+                <div class="reportes-cards">
+                    <div class="reporte-card">
+                        <h3>Ventas del Dia</h3>
+                        <p class="reporte-valor" id="ventas-dia">$0.00</p>
+                        <p class="reporte-sub" id="num-ventas-dia">0 ventas</p>
+                    </div>
+                    <div class="reporte-card">
+                        <h3>Producto Mas Vendido</h3>
+                        <p class="reporte-valor" id="prod-mas-vendido">-</p>
+                        <p class="reporte-sub" id="cant-mas-vendido">0 unidades</p>
+                    </div>
+                    <div class="reporte-card">
+                        <h3>Total Productos</h3>
+                        <p class="reporte-valor" id="total-productos">0</p>
+                        <p class="reporte-sub">en inventario</p>
+                    </div>
+                    <div class="reporte-card">
+                        <h3>Productos con Stock Bajo</h3>
+                        <p class="reporte-valor" id="stock-bajo">0</p>
+                        <p class="reporte-sub">menos de 5 unidades</p>
+                    </div>
+                </div>
+                <div class="reporte-detalle">
+                    <h3>Ventas por Metodo de Pago</h3>
+                    <div id="chart-metodos" class="chart-barras"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Modal Ticket -->
+        <div id="modal-ticket" class="modal">
+            <div class="modal-content ticket-modal">
+                <div id="ticket-impresion" class="ticket-impresion"></div>
+                <div class="modal-buttons">
+                    <button id="btn-imprimir" class="btn-cobrar">Imprimir</button>
+                    <button id="btn-cerrar-ticket" class="btn-cancelar">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/datos.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
