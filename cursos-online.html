@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proyecto de Inversion - Plataforma de Cursos Online</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --primary: #7c3aed;
+            --primary-light: #a78bfa;
+            --dark: #0f0a1a;
+            --gray: #64748b;
+            --accent: #f59e0b;
+            --green: #10b981;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--dark);
+            color: white;
+            overflow-x: hidden;
+        }
+
+        .slide {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 60px 80px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .slide::before {
+            content: '';
+            position: absolute;
+            top: -50%; left: -50%;
+            width: 200%; height: 200%;
+            background: radial-gradient(circle at 30% 50%, rgba(124,58,237,0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 70% 80%, rgba(245,158,11,0.06) 0%, transparent 40%);
+            z-index: 0;
+        }
+
+        .slide > * { position: relative; z-index: 1; }
+
+        .slide-number {
+            position: absolute;
+            top: 30px; right: 40px;
+            font-size: 0.85rem;
+            color: var(--gray);
+            font-weight: 500;
+            letter-spacing: 2px;
+        }
+
+        .divider {
+            width: 80px; height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            border-radius: 2px;
+            margin: 24px 0;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 8px 20px;
+            background: rgba(124,58,237,0.15);
+            border: 1px solid rgba(124,58,237,0.3);
+            border-radius: 30px;
+            font-size: 0.85rem;
+            color: var(--primary-light);
+            font-weight: 500;
+            letter-spacing: 1px;
+            margin-bottom: 30px;
+        }
+
+        .titulo-proyecto {
+            font-size: 3.5rem;
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, #ffffff 0%, #94a3b8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-align: center;
+        }
+
+        .subtitulo-proyecto {
+            font-size: 1.4rem;
+            font-weight: 300;
+            color: var(--gray);
+            margin-bottom: 40px;
+        }
+
+        .info-universidad {
+            font-size: 1rem;
+            color: var(--gray);
+            line-height: 1.8;
+            text-align: center;
+        }
+
+        .info-universidad strong { color: #cbd5e1; }
+
+        .section-label {
+            font-size: 0.85rem;
+            color: var(--accent);
+            font-weight: 600;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+        }
+
+        .section-title {
+            font-size: 2.6rem;
+            font-weight: 800;
+            margin-bottom: 8px;
+        }
+
+        .section-desc {
+            font-size: 1.05rem;
+            color: var(--gray);
+            max-width: 650px;
+            text-align: center;
+            margin-bottom: 40px;
+            line-height: 1.7;
+        }
+
+        /* Equipo */
+        .equipo-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            width: 100%;
+            max-width: 800px;
+        }
+
+        .miembro-card {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 16px;
+            padding: 32px 24px;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .miembro-card:hover {
+            background: rgba(124,58,237,0.08);
+            border-color: rgba(124,58,237,0.3);
+            transform: translateY(-4px);
+        }
+
+        .miembro-avatar {
+            width: 70px; height: 70px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.5rem; font-weight: 700;
+            margin: 0 auto 16px;
+        }
+
+        .miembro-nombre { font-size: 1.05rem; font-weight: 600; margin-bottom: 4px; }
+        .miembro-rol { font-size: 0.85rem; color: var(--gray); }
+
+        /* Descripcion */
+        .desc-box {
+            max-width: 850px;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 20px;
+            padding: 40px;
+        }
+
+        .desc-box p {
+            font-size: 1.05rem;
+            color: #cbd5e1;
+            line-height: 1.9;
+            margin-bottom: 16px;
+        }
+
+        .desc-box p:last-child { margin-bottom: 0; }
+
+        .highlight { color: var(--accent); font-weight: 600; }
+        .highlight-green { color: var(--green); font-weight: 600; }
+        .highlight-purple { color: var(--primary-light); font-weight: 600; }
+
+        /* Inversion */
+        .inversion-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            width: 100%;
+            max-width: 900px;
+        }
+
+        .inversion-card {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 16px;
+            padding: 30px;
+        }
+
+        .inversion-card h3 {
+            font-size: 1rem;
+            color: var(--accent);
+            margin-bottom: 16px;
+            font-weight: 600;
+        }
+
+        .inversion-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+            font-size: 0.95rem;
+        }
+
+        .inversion-item:last-child { border-bottom: none; }
+        .inversion-item span:last-child { font-weight: 700; color: var(--green); }
+
+        .inversion-total {
+            display: flex;
+            justify-content: space-between;
+            padding: 14px 0 0;
+            margin-top: 8px;
+            border-top: 2px solid rgba(124,58,237,0.3);
+            font-size: 1.1rem;
+            font-weight: 700;
+        }
+
+        .inversion-total span:last-child { color: var(--accent); font-size: 1.3rem; }
+
+        /* Modelo financiero */
+        .modelo-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            width: 100%;
+            max-width: 900px;
+        }
+
+        .modelo-card {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 16px;
+            padding: 28px;
+            transition: all 0.3s;
+        }
+
+        .modelo-card:hover {
+            background: rgba(124,58,237,0.06);
+            border-color: rgba(124,58,237,0.2);
+        }
+
+        .modelo-card h4 {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: var(--primary-light);
+        }
+
+        .modelo-card p {
+            font-size: 0.9rem;
+            color: var(--gray);
+            line-height: 1.6;
+        }
+
+        /* Flujo y formulas */
+        .formula-box {
+            background: rgba(124,58,237,0.08);
+            border: 1px solid rgba(124,58,237,0.2);
+            border-radius: 12px;
+            padding: 20px 28px;
+            font-family: 'Courier New', monospace;
+            font-size: 1rem;
+            color: #e2e8f0;
+            margin: 10px 0;
+            text-align: center;
+        }
+
+        .flujo-tabla {
+            width: 100%;
+            max-width: 900px;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        .flujo-tabla th {
+            background: rgba(124,58,237,0.2);
+            padding: 12px 16px;
+            text-align: center;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--primary-light);
+            border: 1px solid rgba(124,58,237,0.15);
+        }
+
+        .flujo-tabla td {
+            padding: 10px 16px;
+            text-align: center;
+            font-size: 0.9rem;
+            border: 1px solid rgba(255,255,255,0.06);
+            color: #cbd5e1;
+        }
+
+        .flujo-tabla tr:hover td { background: rgba(255,255,255,0.03); }
+        .positivo { color: var(--green) !important; font-weight: 600; }
+        .negativo { color: #f87171 !important; font-weight: 600; }
+
+        /* Evaluacion */
+        .eval-cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            width: 100%;
+            max-width: 900px;
+        }
+
+        .eval-card {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 16px;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .eval-card .eval-label {
+            font-size: 0.8rem;
+            color: var(--gray);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+        }
+
+        .eval-card .eval-valor {
+            font-size: 2.2rem;
+            font-weight: 800;
+            margin-bottom: 6px;
+        }
+
+        .eval-card .eval-desc {
+            font-size: 0.85rem;
+            color: var(--gray);
+        }
+
+        /* Canvas */
+        .canvas-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 14px;
+            width: 100%;
+            max-width: 950px;
+        }
+
+        .canvas-item {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 12px;
+            padding: 20px;
+        }
+
+        .canvas-item h4 {
+            font-size: 0.82rem;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+            font-weight: 700;
+        }
+
+        .canvas-item p {
+            font-size: 0.85rem;
+            color: #94a3b8;
+            line-height: 1.5;
+        }
+
+        .canvas-item.wide { grid-column: span 2; }
+        .canvas-item.full { grid-column: span 3; }
+
+        /* Conclusiones */
+        .concl-lista {
+            max-width: 800px;
+            width: 100%;
+        }
+
+        .concl-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+            padding: 16px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+        }
+
+        .concl-num {
+            flex-shrink: 0;
+            width: 36px; height: 36px;
+            border-radius: 10px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 700; font-size: 0.9rem;
+        }
+
+        .concl-text { font-size: 0.95rem; color: #cbd5e1; line-height: 1.6; }
+
+        /* Botones */
+        .btn-demo {
+            display: inline-block;
+            padding: 16px 40px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: white;
+            text-decoration: none;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-top: 20px;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+            font-family: inherit;
+        }
+
+        .btn-demo:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(124,58,237,0.3);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .slide { padding: 40px 24px; }
+            .titulo-proyecto { font-size: 2.2rem; }
+            .section-title { font-size: 2rem; }
+            .inversion-grid, .modelo-grid, .eval-cards, .canvas-grid, .equipo-grid { grid-template-columns: 1fr; }
+            .canvas-item.wide, .canvas-item.full { grid-column: span 1; }
+        }
+
+        /* Print */
+        @page { size: landscape; margin: 0; }
+        @media print {
+            body { background: #0f0a1a !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+            .slide { min-height: 100vh; page-break-after: always; page-break-inside: avoid; }
+            .slide:last-child { page-break-after: avoid; }
+            .slide::before { display: none; }
+            .btn-demo { display: none !important; }
+            .slide-number { display: none; }
+            .titulo-proyecto { background: none !important; -webkit-text-fill-color: white !important; }
+            .miembro-avatar, .concl-num { background: #7c3aed !important; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 1: Portada -->
+    <section class="slide" style="background:linear-gradient(135deg,#0f0a1a,#1a1025);">
+        <span class="slide-number">01 / 11</span>
+        <div class="badge">CESUN UNIVERSIDAD - MATEMATICAS FINANCIERAS</div>
+        <h1 class="titulo-proyecto">Plataforma de<br>Cursos Online</h1>
+        <p class="subtitulo-proyecto">Proyecto de Inversion</p>
+        <div class="divider"></div>
+        <div class="info-universidad">
+            <strong>Materia:</strong> Matematicas Financieras<br>
+            <strong>Profesor:</strong> Leonel<br>
+            <strong>Fecha:</strong> Abril 2026
+        </div>
+    </section>
+
+    <!-- 2: Equipo -->
+    <section class="slide" style="background:linear-gradient(135deg,#0f0a1a,#151020);">
+        <span class="slide-number">02 / 11</span>
+        <p class="section-label">Nuestro Equipo</p>
+        <h2 class="section-title">Integrantes</h2>
+        <div class="divider"></div>
+        <div class="equipo-grid">
+            <div class="miembro-card">
+                <div class="miembro-avatar">DR</div>
+                <div class="miembro-nombre">Diego Rivera</div>
+                <div class="miembro-rol">Desarrollador</div>
+            </div>
+            <div class="miembro-card">
+                <div class="miembro-avatar">DQ</div>
+                <div class="miembro-nombre">Diego Quintero</div>
+                <div class="miembro-rol">Analisis Financiero</div>
+            </div>
+            <div class="miembro-card">
+                <div class="miembro-avatar">LV</div>
+                <div class="miembro-nombre">Lugo Villa</div>
+                <div class="miembro-rol">Estudio de Mercado</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3: Introduccion y Descripcion -->
+    <section class="slide" style="background:linear-gradient(135deg,#0f0a1a,#1a1025);">
+        <span class="slide-number">03 / 11</span>
+        <p class="section-label">Introduccion</p>
+        <h2 class="section-title">Descripcion del Proyecto</h2>
+        <div class="divider"></div>
+        <div class="desc-box">
+            <p>Desarrollo de una <span class="highlight">plataforma de cursos online tipo e-learning</span> que permite a instructores crear y vender cursos, y a estudiantes acceder a contenido educativo con certificaciones al completarlos.</p>
+            <p>El modelo de negocio se basa en <span class="highlight-purple">suscripciones mensuales</span>, donde los usuarios pagan una cuota fija para acceder a todo el catalogo de cursos, generando ingresos recurrentes y predecibles.</p>
+            <p>Este proyecto representa una oportunidad de inversion atractiva en el sector EdTech, que ha experimentado un <span class="highlight-green">crecimiento del 16% anual</span> en America Latina desde 2020.</p>
+        </div>
+    </section>
+
+    <!-- 4: Estudio de Mercado -->
+    <section class="slide" style="background:linear-gradient(135deg,#0f0a1a,#151020);">
+        <span class="slide-number">04 / 11</span>
+        <p class="section-label">Mercado</p>
+        <h2 class="section-title">Estudio de Mercado</h2>
+        <div class="divider"></div>
+        <div class="modelo-grid">
+            <div class="modelo-card">
+                <h4>Segmento de Clientes</h4>
+                <p>Estudiantes universitarios, profesionistas que buscan actualizarse y empresas que requieren capacitar a su personal. Rango de edad: 18-45 anos.</p>
+            </div>
+            <div class="modelo-card">
+                <h4>Competencia</h4>
+                <p>Platzi, Udemy, Coursera. Nuestra ventaja: contenido localizado en espanol con enfoque en el mercado mexicano y precios accesibles.</p>
+            </div>
+            <div class="modelo-card">
+                <h4>Canales</h4>
+                <p>Marketing digital (redes sociales, Google Ads), alianzas con universidades y empresas, programa de referidos con descuentos.</p>
+            </div>
+            <div class="modelo-card">
+                <h4>Demanda Proyectada</h4>
+                <p>Mercado EdTech en Mexico: $2,500M USD. Se proyecta captar 0.01% en el primer ano con crecimiento del 10% mensual en usuarios.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5: Inversion Inicial -->
+    <section class="slide" style="background:linear-gradient(135deg,#0f0a1a,#1a1025);">
+        <span class="slide-number">05 / 11</span>
+        <p class="section-label">Capital</p>
+        <h2 class="section-title">Inversion Inicial</h2>
+        <div class="divider"></div>
+        <div class="inversion-grid">
+            <div class="inversion-card">
+                <h3>Costos de Desarrollo</h3>
+                <div class="inversion-item"><span>Desarrollo de plataforma web</span><span>$70,000</span></div>
+                <div class="inversion-item"><span>Creacion de contenido (cursos)</span><span>$30,000</span></div>
+                <div class="inversion-item"><span>Diseno UX/UI</span><span>$15,000</span></div>
+                <div class="inversion-total"><span>Subtotal</span><span>$115,000</span></div>
+            </div>
+            <div class="inversion-card">
+                <h3>Costos Operativos (Anual)</h3>
+                <div class="inversion-item"><span>Hosting y servidores</span><span>$12,000</span></div>
+                <div class="inversion-item"><span>Marketing digital</span><span>$36,000</span></div>
+                <div class="inversion-item"><span>Dominio y licencias</span><span>$5,000</span></div>
+                <div class="inversion-total"><span>Subtotal anual</span><span>$53,000</span></div>
+            </div>
+        </div>
+        <p style="margin-top:24px;font-size:1.3rem;font-weight:800;color:var(--accent);">Inversion Total Inicial: $168,000 MXN</p>
+    </section>
+
+    <!-- 6: Modelo Financiero -->
+    <section class="slide" style="background:linear-gradient(135deg,#0f0a1a,#151020);">
+        <span class="slide-number">06 / 11</span>
+        <p class="section-label">Finanzas</p>
+        <h2 class="section-title">Modelo Financiero</h2>
+        <div class="divider"></div>
+        <div class="modelo-grid">
+            <div class="modelo-card">
+                <h4>Interes Compuesto</h4>
+                <p>Crecimiento proyectado de usuarios al 10% mensual. Mes 1: 100 usuarios, Mes 12: 314 usuarios.</p>
+                <div class="formula-box">VF = VP(1 + i)^n<br>VF = 100(1.10)^12 = 314 usuarios</div>
+            </div>
+            <div class="modelo-card">
+                <h4>Anualidades</h4>
+                <p>Suscripcion mensual de $199 MXN por usuario. Ingresos recurrentes predecibles.</p>
+                <div class="formula-box">Ingreso Mes 12 = 314 x $199<br>= $62,486 MXN/mes</div>
+            </div>
+            <div class="modelo-card">
+                <h4>Amortizacion</h4>
+                <p>Recuperacion de la inversion inicial de $168,000 mediante los ingresos mensuales generados.</p>
+                <div class="formula-box">Periodo recuperacion ≈ 8 meses</div>
+            </div>
+            <div class="modelo-card">
+                <h4>Depreciacion</h4>
+                <p>Equipos de computo y software se deprecian a 3 anos en linea recta.</p>
+                <div class="formula-box">Dep. anual = $115,000 / 3<br>= $38,333 MXN</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 7: Flujo de Efectivo -->
+    <section class="slide" style="background:linear-gradient(135deg,#0f0a1a,#1a1025);">
+        <span class="slide-number">07 / 11</span>
+        <p class="section-label">Proyeccion</p>
+        <h2 class="section-title">Flujo de Efectivo</h2>
+        <div class="divider"></div>
+        <table class="flujo-tabla">
+            <thead>
+                <tr>
+                    <th>Mes</th>
+                    <th>Usuarios</th>
+                    <th>Ingresos</th>
+                    <th>Costos</th>
+                    <th>Flujo Neto</th>
+                    <th>Acumulado</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>0</td><td>-</td><td>-</td><td>$168,000</td><td class="negativo">-$168,000</td><td class="negativo">-$168,000</td></tr>
+                <tr><td>1</td><td>100</td><td>$19,900</td><td>$4,417</td><td class="positivo">$15,483</td><td class="negativo">-$152,517</td></tr>
+                <tr><td>3</td><td>133</td><td>$26,467</td><td>$4,417</td><td class="positivo">$22,050</td><td class="negativo">-$106,060</td></tr>
+                <tr><td>6</td><td>177</td><td>$35,223</td><td>$4,417</td><td class="positivo">$30,806</td><td class="negativo">-$21,390</td></tr>
+                <tr><td>8</td><td>214</td><td>$42,586</td><td>$4,417</td><td class="positivo">$38,169</td><td class="positivo">$52,560</td></tr>
+                <tr><td>12</td><td>314</td><td>$62,486</td><td>$4,417</td><td class="positivo">$58,069</td><td class="positivo">$263,044</td></tr>
+            </tbody>
+        </table>
+        <p style="margin-top:20px;color:var(--gray);font-size:0.9rem;">* Costos mensuales = $53,000 anuales / 12 = $4,417 MXN. Crecimiento de usuarios al 10% mensual.</p>
+    </section>
+
+    <!-- 8: Evaluacion Financiera -->
+    <section class="slide" style="background:linear-gradient(135deg,#0f0a1a,#151020);">
+        <span class="slide-number">08 / 11</span>
+        <p class="section-label">Evaluacion</p>
+        <h2 class="section-title">Indicadores Financieros</h2>
+        <div class="divider"></div>
+        <div class="eval-cards">
+            <div class="eval-card">
+                <div class="eval-label">VAN (Valor Actual Neto)</div>
+                <div class="eval-valor" style="color:var(--green);">$189,520</div>
+                <div class="eval-desc">Proyecto rentable (VAN > 0)</div>
+            </div>
+            <div class="eval-card">
+                <div class="eval-label">TIR (Tasa Interna de Retorno)</div>
+                <div class="eval-valor" style="color:var(--accent);">42.3%</div>
+                <div class="eval-desc">Superior a tasa de descuento (12%)</div>
+            </div>
+            <div class="eval-card">
+                <div class="eval-label">Punto de Equilibrio</div>
+                <div class="eval-valor" style="color:var(--primary-light);">Mes 8</div>
+                <div class="eval-desc">Recuperacion de inversion en 8 meses</div>
+            </div>
+        </div>
+        <div class="desc-box" style="margin-top:30px;max-width:700px;padding:24px 30px;">
+            <p style="margin:0;font-size:0.95rem;">El proyecto presenta un <span class="highlight-green">VAN positivo de $189,520 MXN</span>, lo que indica que genera valor por encima de la inversion. La <span class="highlight">TIR del 42.3%</span> supera ampliamente la tasa de descuento del 12%, confirmando la viabilidad financiera del proyecto.</p>
+        </div>
+    </section>
+
+    <!-- 9: Modelo Canvas -->
+    <section class="slide" style="background:linear-gradient(135deg,#0f0a1a,#1a1025);">
+        <span class="slide-number">09 / 11</span>
+        <p class="section-label">Estrategia</p>
+        <h2 class="section-title">Modelo Canvas</h2>
+        <div class="divider"></div>
+        <div class="canvas-grid">
+            <div class="canvas-item">
+                <h4>Socios Clave</h4>
+                <p>Instructores expertos, universidades aliadas, pasarelas de pago (Stripe, PayPal).</p>
+            </div>
+            <div class="canvas-item">
+                <h4>Actividades Clave</h4>
+                <p>Desarrollo de plataforma, produccion de cursos, marketing digital, soporte al usuario.</p>
+            </div>
+            <div class="canvas-item">
+                <h4>Propuesta de Valor</h4>
+                <p>Cursos en espanol, certificaciones, contenido enfocado al mercado mexicano, precio accesible.</p>
+            </div>
+            <div class="canvas-item">
+                <h4>Relacion con Clientes</h4>
+                <p>Comunidad online, soporte por chat, foros de discusion, seguimiento de progreso.</p>
+            </div>
+            <div class="canvas-item">
+                <h4>Segmentos de Clientes</h4>
+                <p>Estudiantes, profesionistas, empresas que capacitan personal.</p>
+            </div>
+            <div class="canvas-item">
+                <h4>Recursos Clave</h4>
+                <p>Plataforma web, servidores, contenido educativo, equipo de desarrollo.</p>
+            </div>
+            <div class="canvas-item wide">
+                <h4>Canales</h4>
+                <p>Sitio web, redes sociales, email marketing, alianzas con instituciones educativas, Google Ads.</p>
+            </div>
+            <div class="canvas-item">
+                <h4>Fuentes de Ingresos</h4>
+                <p>Suscripciones mensuales ($199/mes), certificaciones premium, cursos empresariales.</p>
+            </div>
+            <div class="canvas-item full">
+                <h4>Estructura de Costos</h4>
+                <p>Desarrollo y mantenimiento ($70,000), contenido ($30,000), hosting ($12,000/ano), marketing ($36,000/ano), dominio y licencias ($5,000/ano).</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 10: Conclusiones -->
+    <section class="slide" style="background:linear-gradient(135deg,#0f0a1a,#151020);">
+        <span class="slide-number">10 / 11</span>
+        <p class="section-label">Cierre</p>
+        <h2 class="section-title">Conclusiones</h2>
+        <div class="divider"></div>
+        <div class="concl-lista">
+            <div class="concl-item">
+                <div class="concl-num">1</div>
+                <div class="concl-text">El proyecto es <strong>financieramente viable</strong> con un VAN positivo de $189,520 MXN y una TIR del 42.3%, superior a la tasa de descuento.</div>
+            </div>
+            <div class="concl-item">
+                <div class="concl-num">2</div>
+                <div class="concl-text">La inversion inicial de $168,000 MXN se <strong>recupera en 8 meses</strong>, un periodo razonable para un proyecto tecnologico.</div>
+            </div>
+            <div class="concl-item">
+                <div class="concl-num">3</div>
+                <div class="concl-text">El modelo de <strong>suscripciones genera ingresos recurrentes</strong>, lo que permite proyectar flujos estables y escalar el negocio.</div>
+            </div>
+            <div class="concl-item">
+                <div class="concl-num">4</div>
+                <div class="concl-text">El mercado EdTech en Mexico esta en <strong>crecimiento constante</strong>, lo que representa una oportunidad real de negocio.</div>
+            </div>
+            <div class="concl-item">
+                <div class="concl-num">5</div>
+                <div class="concl-text">Se recomienda <strong>iniciar la inversion</strong> y evaluar resultados trimestralmente para ajustar la estrategia de crecimiento.</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 11: Referencias -->
+    <section class="slide" style="background:linear-gradient(135deg,#0f0a1a,#1a1025);text-align:center;">
+        <span class="slide-number">11 / 11</span>
+        <p class="section-label">Fuentes</p>
+        <h2 class="section-title">Referencias</h2>
+        <div class="divider"></div>
+        <div class="desc-box" style="text-align:left;">
+            <p style="font-size:0.9rem;">1. INEGI (2025). Estadisticas sobre tecnologias de la informacion en hogares mexicanos.</p>
+            <p style="font-size:0.9rem;">2. Statista (2025). E-learning market size in Latin America.</p>
+            <p style="font-size:0.9rem;">3. Gitman, L. & Zutter, C. (2022). <em>Principios de Administracion Financiera</em>. Pearson.</p>
+            <p style="font-size:0.9rem;">4. Baca Urbina, G. (2021). <em>Evaluacion de Proyectos</em>. McGraw-Hill.</p>
+            <p style="font-size:0.9rem;">5. Osterwalder, A. (2010). <em>Business Model Generation</em>. Wiley.</p>
+        </div>
+        <button class="btn-demo" style="margin-top:20px;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);" onclick="window.print();">Descargar PDF</button>
+    </section>
+
+</body>
+</html>
