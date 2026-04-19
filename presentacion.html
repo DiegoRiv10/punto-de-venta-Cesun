@@ -580,7 +580,26 @@
         <div class="divider"></div>
         <p class="section-desc">A continuacion se presenta el sistema funcionando en tiempo real.</p>
         <a href="#" class="btn-demo" onclick="localStorage.removeItem('pos_sesion'); window.location.href='login.html';">Abrir Punto de Venta</a>
+        <button class="btn-demo" style="margin-top:12px;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);" onclick="window.print();">Descargar PDF</button>
     </section>
 
+    <style>
+        @media print {
+            .slide { min-height: auto; page-break-after: always; padding: 40px; }
+            .slide:last-child { page-break-after: avoid; }
+            .btn-demo { display: none !important; }
+            .slide-number { display: none; }
+            body { background: white; color: black; }
+            .section-title, .titulo-proyecto { -webkit-text-fill-color: #0f172a; color: #0f172a; }
+            .section-label { color: #2563eb; }
+            .section-desc, .col-info p, .objetivo-texto p, .justificacion-box p, .tech-card p,
+            .miembro-rol, .info-universidad { color: #334155; }
+            .divider { background: #2563eb; }
+            .miembro-card, .tech-card, .justificacion-box { border-color: #e2e8f0; background: #f8fafc; }
+            .miembro-avatar, .objetivo-num { background: #2563eb !important; print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+            .highlight { color: #2563eb; }
+            .badge { border-color: #2563eb; color: #2563eb; }
+        }
+    </style>
 </body>
 </html>
