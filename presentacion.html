@@ -584,41 +584,56 @@
     </section>
 
     <style>
-        @page {
-            size: landscape;
-            margin: 0;
-        }
+        @page { size: 297mm 210mm; margin: 0; }
         @media print {
-            body { background: #0f172a !important; color: white !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+            html, body {
+                margin: 0; padding: 0;
+                background: #0f172a !important;
+                color: white !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
             .slide {
-                min-height: 100vh;
-                width: 100vw;
+                width: 297mm;
+                height: 210mm;
+                min-height: unset;
+                max-height: 210mm;
+                overflow: hidden !important;
                 page-break-after: always;
                 page-break-inside: avoid;
-                padding: 50px 80px;
+                padding: 15mm 20mm;
             }
+            .slide::before { display: none !important; content: none !important; }
             .slide:last-child { page-break-after: avoid; }
-            .slide::before { display: none; }
             .btn-demo { display: none !important; }
             .slide-number { display: none; }
-            .slide-portada { background: #0f172a !important; }
-            .slide-equipo { background: #0f172a !important; }
-            .slide-proposito { background: #0f172a !important; }
-            .slide-objetivos { background: #0f172a !important; }
-            .slide-justificacion { background: #0f172a !important; }
-            .slide-tech { background: #0f172a !important; }
-            .slide-demo { background: #0f172a !important; }
-            .titulo-proyecto { background: none !important; -webkit-text-fill-color: white !important; color: white !important; }
-            .section-title { color: white !important; }
-            .badge { background: rgba(37,99,235,0.3) !important; color: #93c5fd !important; border-color: rgba(37,99,235,0.5) !important; }
-            .divider { background: #2563eb !important; }
+            .titulo-proyecto { background: none !important; -webkit-text-fill-color: white !important; color: white !important; font-size: 3rem; }
+            .subtitulo-proyecto { margin-bottom: 20px; }
+            .section-title { color: white !important; font-size: 2rem; margin-bottom: 4px; }
+            .section-label { color: #06b6d4 !important; margin-bottom: 6px; font-size: 0.75rem; }
+            .divider { background: #2563eb !important; margin: 10px 0; height: 3px; }
+            .badge { background: rgba(37,99,235,0.3) !important; color: #93c5fd !important; border-color: rgba(37,99,235,0.5) !important; margin-bottom: 16px; font-size: 0.75rem; padding: 6px 14px; }
+            .info-universidad { color: #94a3b8 !important; font-size: 0.85rem; }
+            .info-universidad strong { color: #cbd5e1 !important; }
+            .section-desc { font-size: 0.85rem; margin-bottom: 20px; }
             .miembro-card, .tech-card, .justificacion-box { background: rgba(255,255,255,0.05) !important; border-color: rgba(255,255,255,0.1) !important; }
-            .miembro-avatar, .objetivo-num { background: linear-gradient(135deg, #2563eb, #06b6d4) !important; }
+            .miembro-avatar, .objetivo-num { background: #2563eb !important; }
+            .miembro-card { padding: 20px 16px; }
+            .miembro-avatar { width: 50px; height: 50px; font-size: 1.1rem; margin-bottom: 10px; }
             .col-info h3 { color: #06b6d4 !important; }
             .highlight { color: #06b6d4 !important; }
-            .section-label { color: #06b6d4 !important; }
-            .info-universidad { color: #94a3b8 !important; }
-            .info-universidad strong { color: #cbd5e1 !important; }
+            .contenido-dos-col { gap: 30px; }
+            .col-info p { font-size: 0.85rem; line-height: 1.6; }
+            .objetivo-item { padding: 12px 0; }
+            .objetivo-texto h4 { font-size: 0.9rem; }
+            .objetivo-texto p { font-size: 0.8rem; }
+            .objetivo-num { width: 36px; height: 36px; font-size: 0.9rem; }
+            .justificacion-box { padding: 24px; }
+            .justificacion-box p { font-size: 0.85rem; margin-bottom: 10px; line-height: 1.6; }
+            .tech-card { padding: 18px; }
+            .tech-card h4 { font-size: 0.95rem; }
+            .tech-card p { font-size: 0.8rem; }
+            .tech-icon { font-size: 1.5rem; }
             .section-desc, .col-info p, .objetivo-texto p, .justificacion-box p,
             .tech-card p, .miembro-rol, .objetivo-texto h4, .miembro-nombre,
             .tech-card h4, .tech-icon { color: #e2e8f0 !important; }
