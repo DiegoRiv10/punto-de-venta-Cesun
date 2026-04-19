@@ -584,21 +584,44 @@
     </section>
 
     <style>
+        @page {
+            size: landscape;
+            margin: 0;
+        }
         @media print {
-            .slide { min-height: auto; page-break-after: always; padding: 40px; }
+            body { background: #0f172a !important; color: white !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+            .slide {
+                min-height: 100vh;
+                width: 100vw;
+                page-break-after: always;
+                page-break-inside: avoid;
+                padding: 50px 80px;
+            }
             .slide:last-child { page-break-after: avoid; }
+            .slide::before { display: none; }
             .btn-demo { display: none !important; }
             .slide-number { display: none; }
-            body { background: white; color: black; }
-            .section-title, .titulo-proyecto { -webkit-text-fill-color: #0f172a; color: #0f172a; }
-            .section-label { color: #2563eb; }
-            .section-desc, .col-info p, .objetivo-texto p, .justificacion-box p, .tech-card p,
-            .miembro-rol, .info-universidad { color: #334155; }
-            .divider { background: #2563eb; }
-            .miembro-card, .tech-card, .justificacion-box { border-color: #e2e8f0; background: #f8fafc; }
-            .miembro-avatar, .objetivo-num { background: #2563eb !important; print-color-adjust: exact; -webkit-print-color-adjust: exact; }
-            .highlight { color: #2563eb; }
-            .badge { border-color: #2563eb; color: #2563eb; }
+            .slide-portada { background: #0f172a !important; }
+            .slide-equipo { background: #0f172a !important; }
+            .slide-proposito { background: #0f172a !important; }
+            .slide-objetivos { background: #0f172a !important; }
+            .slide-justificacion { background: #0f172a !important; }
+            .slide-tech { background: #0f172a !important; }
+            .slide-demo { background: #0f172a !important; }
+            .titulo-proyecto { background: none !important; -webkit-text-fill-color: white !important; color: white !important; }
+            .section-title { color: white !important; }
+            .badge { background: rgba(37,99,235,0.3) !important; color: #93c5fd !important; border-color: rgba(37,99,235,0.5) !important; }
+            .divider { background: #2563eb !important; }
+            .miembro-card, .tech-card, .justificacion-box { background: rgba(255,255,255,0.05) !important; border-color: rgba(255,255,255,0.1) !important; }
+            .miembro-avatar, .objetivo-num { background: linear-gradient(135deg, #2563eb, #06b6d4) !important; }
+            .col-info h3 { color: #06b6d4 !important; }
+            .highlight { color: #06b6d4 !important; }
+            .section-label { color: #06b6d4 !important; }
+            .info-universidad { color: #94a3b8 !important; }
+            .info-universidad strong { color: #cbd5e1 !important; }
+            .section-desc, .col-info p, .objetivo-texto p, .justificacion-box p,
+            .tech-card p, .miembro-rol, .objetivo-texto h4, .miembro-nombre,
+            .tech-card h4, .tech-icon { color: #e2e8f0 !important; }
         }
     </style>
 </body>
